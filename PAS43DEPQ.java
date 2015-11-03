@@ -18,24 +18,28 @@ public class PAS43DEPQ implements DEPQ
     @Override
     public void add(Comparable c)
     {
-        tree[index] = new TreeNode(c);
-        if(index > 0)
+        TreeNode a = new TreeNode();
+        a.setValue((int)c);
+        if(tree[0] != null)
         {
             //if less than add to left
-            if (tree[index].compareTo(this.tree[index-1]) < 0)
+            if (tree[index - 1].compareTo(a) < 0)
             {
-                tree[index].setLeftChild(new TreeNode(c));
+                tree[index - 1].setLeftChild(new TreeNode(a));
             }
             //if == add to right
-            if (tree[index].compareTo(this.tree[index-1]) == 0)
+            else if (tree[index - 1].compareTo(a) == 0)
             {
-                tree[index].setRightChild(new TreeNode(c));
+                tree[index - 1].setRightChild(new TreeNode(a));
             }
             //if more than add to right
-            if (tree[index].compareTo(this.tree[index-1]) > 0)
-                {
-                tree[index].setRightChild(new TreeNode(c));
+            else if (tree[index - 1].compareTo(a) > 0)
+            {
+                tree[index - 1].setRightChild(new TreeNode(c));
             }
+        } else {
+            //creates root node
+            tree[0] = new TreeNode(c);
         }
         index += 1;
     }
