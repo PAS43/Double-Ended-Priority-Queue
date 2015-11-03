@@ -8,17 +8,29 @@ class TreeNode implements Comparable<TreeNode>
     private Integer value;
     private TreeNode leftChild;
     private TreeNode rightChild;
+    private TreeNode parent;
 
     //constructors
     public TreeNode(){}
     public TreeNode(Integer v){this.value  = v;}
     public TreeNode(TreeNode t){
         this.value = t.value;
+        this.parent = t.parent;
         this.leftChild = t.leftChild;
         this.rightChild = t.rightChild;
     }
     public TreeNode (Comparable c){this.value = (int) c;}
 
+    //set parent
+    public void setParent(TreeNode t)
+    {
+        this.parent = t.parent;
+    }
+    //get parent
+    public TreeNode getParent()
+    {
+        return  this.parent;
+    }
     //get value
     public int getValue(){return value;}
     //set value
