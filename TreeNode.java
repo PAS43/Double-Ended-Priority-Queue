@@ -1,8 +1,5 @@
 package cs21120;
 
-/**
- * Created by def on 29/10/15.
- */
 class TreeNode implements Comparable<TreeNode>
 {
     private Integer value;
@@ -24,12 +21,12 @@ class TreeNode implements Comparable<TreeNode>
     //set parent
     public void setParent(TreeNode t)
     {
-        this.parent = t.parent;
+        this.parent = t;
     }
     //get parent
     public TreeNode getParent()
     {
-        return  this.parent;
+        return this.parent;
     }
     //get value
     public int getValue(){return value;}
@@ -76,38 +73,9 @@ class TreeNode implements Comparable<TreeNode>
         {
             return -1;   //if value less
         }
-        //this should not run
         return 99;
     }
 
-    public void insert(TreeNode t)
-    {
 
-        //This if statement runs if the number is less than
-        if(this.compareTo(t) < 0)
-        {
-            if(this.leftChild != null)
-                this.leftChild.insert(t);
-            else
-                this.leftChild = new TreeNode(t);
-        }
-        //This if statement runs if equal to
-        if (this.compareTo(t) == 0)
-        {
-            if(this.rightChild != null)
-                this.rightChild.insert(t);
-            else
-                this.rightChild = new TreeNode(t);
-
-        }
-        //This one runs if it is greater than
-        if (this.compareTo(t) > 0)
-        {
-            if(this.rightChild != null)
-                this.rightChild.insert(t);
-            else
-                this.rightChild = new TreeNode(t);
-        }
-    }
 
 }

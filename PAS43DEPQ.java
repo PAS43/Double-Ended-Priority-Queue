@@ -2,7 +2,7 @@ package cs21120;
 
 public class PAS43DEPQ implements DEPQ
 {
-    private TreeNode[] tree = new TreeNode[100];
+    private TreeNode[] tree = new TreeNode[1001];
     int index = 0;
 
     @Override
@@ -44,6 +44,8 @@ public class PAS43DEPQ implements DEPQ
             tree[0] = new TreeNode(c);
             return;
         }
+
+        //this while loop is for tree traversal
         while(tree[index] != null) {
             if( c.compareTo(tree[index].getValue()) == 0) {
                 index += right() - index;
@@ -61,22 +63,28 @@ public class PAS43DEPQ implements DEPQ
                 continue;
             }
 
+
         }
 
+        //this part is for place the new node
         if(tree[index] == null) {
             tree[index] = new TreeNode(c);
-            tree[index].setParent(tree[parent()]);
 
-            if( c.compareTo(tree[index].getValue()) == 0)
+            if( c.compareTo(tree[index].getValue()) == 0) {
                 tree[parent()].setRightChild(tree[index]);
+                tree[index].setParent(tree[parent()]);
+            }
 
-            if( c.compareTo(tree[index].getValue()) > 0)
+            if( c.compareTo(tree[index].getValue()) > 0) {
                 tree[parent()].setRightChild(tree[index]);
+                tree[index].setParent(tree[parent()]);
+            }
 
-            if( c.compareTo(tree[index].getValue()) < 0)
+            if( c.compareTo(tree[index].getValue()) < 0) {
                 tree[parent()].setLeftChild(tree[index]);
-
-
+                tree[index].setParent(tree[parent()]);
+            }
+            //this is equal to 0 so evrey time add is called it starts from tree index ie, tree[0] root node
             index = 0;
         }
 
