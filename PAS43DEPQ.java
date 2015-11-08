@@ -15,33 +15,72 @@ public class PAS43DEPQ implements DEPQ
         return null;
     }
 
+    /*
+    right: (2 * n) + 2
+    left: (2 * n) + 1
+    parent: (1 - n) / 2
+     */
+
+    public int right()
+    {
+        return (2 * index) + 2;
+    }
+
+    public int left()
+    {
+        return (2 * index) + 1;
+    }
+
+    public int parent()
+    {
+        return Math.round((index  - 1) / 2);
+    }
+
     @Override
     public void add(Comparable c)
     {
-        TreeNode a = new TreeNode();
-        a.setValue((int)c);
-        if(tree[0] != null)
-        {
-            //if less than add to left
-            if (tree[index - 1].compareTo(a) < 0)
-            {
-                tree[index - 1].setLeftChild(new TreeNode(a));
-            }
-            //if == add to right
-            else if (tree[index - 1].compareTo(a) == 0)
-            {
-                tree[index - 1].setRightChild(new TreeNode(a));
-            }
-            //if more than add to right
-            else if (tree[index - 1].compareTo(a) > 0)
-            {
-                tree[index - 1].setRightChild(new TreeNode(c));
-            }
-        } else {
-            //creates root node
+        // Root node
+        if (tree[0] == null) {
             tree[0] = new TreeNode(c);
+            return;
         }
-        index += 1;
+        while(tree[index] != null) {
+            if( c.compareTo(tree[index].getValue()) == 0) {
+                index += right() - index;
+                continue;
+            }
+
+            if( c.compareTo(tree[index].getValue()) > 0) {
+
+                index += right() - index;
+                continue;
+            }
+
+            if( c.compareTo(tree[index].getValue()) < 0) {
+                index += left() - index;
+                continue;
+            }
+
+        }
+
+        if(tree[index] == null) {
+            tree[index] = new TreeNode(c);
+            tree[index].setParent(tree[parent()]);
+
+            if( c.compareTo(tree[index].getValue()) == 0)
+                tree[parent()].setRightChild(tree[index]);
+
+            if( c.compareTo(tree[index].getValue()) > 0)
+                tree[parent()].setRightChild(tree[index]);
+
+            if( c.compareTo(tree[index].getValue()) < 0)
+                tree[parent()].setLeftChild(tree[index]);
+
+
+            index = 0;
+        }
+
+        return;
     }
 
     @Override
@@ -56,12 +95,12 @@ public class PAS43DEPQ implements DEPQ
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return (tree[0] == null) ? true : false;
     }
 
     @Override
     public int size() {
-        return 0;
+        return tree.length;
     }
 
 
