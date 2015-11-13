@@ -4,14 +4,33 @@ public class PAS43DEPQ implements DEPQ
 {
     private TreeNode[] tree = new TreeNode[1001];
     int index = 0;
+    int size = 0;
 
     @Override
     public Comparable inspectLeast() {
+        int i = 0;
+        while (tree[i] != null)
+        {
+            i += left() - i;
+            if(tree[i].getLeftChild() == null)
+            {
+                return (Comparable) tree[i];
+            }
+        }
         return null;
     }
 
     @Override
     public Comparable inspectMost() {
+        int i = 0;
+        while (tree[i] != null)
+        {
+            i += right() - i;
+            if(tree[i].getRightChild() == null)
+            {
+                return (Comparable) tree[i];
+            }
+        }
         return null;
     }
 
@@ -39,7 +58,8 @@ public class PAS43DEPQ implements DEPQ
     @Override
     public void add(Comparable c)
     {
-        // Root node
+
+        // Checks for Root node if not there it places one
         if (tree[0] == null) {
             tree[0] = new TreeNode(c);
             return;
@@ -53,7 +73,6 @@ public class PAS43DEPQ implements DEPQ
             }
 
             if( c.compareTo(tree[index].getValue()) > 0) {
-
                 index += right() - index;
                 continue;
             }
@@ -62,8 +81,6 @@ public class PAS43DEPQ implements DEPQ
                 index += left() - index;
                 continue;
             }
-
-
         }
 
         //this part is for place the new node
@@ -84,20 +101,41 @@ public class PAS43DEPQ implements DEPQ
                 tree[parent()].setLeftChild(tree[index]);
                 tree[index].setParent(tree[parent()]);
             }
-            //this is equal to 0 so evrey time add is called it starts from tree index ie, tree[0] root node
+            //this is equal to 0 so every time add is called it starts from tree index ie, tree[0] - root node
             index = 0;
         }
-
+        //gets the size of the array
+        size++;
         return;
     }
 
     @Override
     public Comparable getLeast() {
+        int i = 0;
+        while (tree[i] != null) {
+            i += left() - i;
+            if (tree[i].getLeftChild() == null) {
+                Comparable least = (Comparable) tree[i];
+                tree[i] = null;
+                return least;
+            }
+        }
         return null;
     }
 
     @Override
     public Comparable getMost() {
+        int i = 0;
+        while (tree[i] != null)
+        {
+            i += right() - i;
+            if(tree[i].getRightChild() == null)
+            {
+                Comparable most = (Comparable) tree[i];
+                tree[i] = null;
+                return most;
+            }
+        }
         return null;
     }
 
@@ -108,7 +146,7 @@ public class PAS43DEPQ implements DEPQ
 
     @Override
     public int size() {
-        return tree.length;
+        return this.size;
     }
 
 
