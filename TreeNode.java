@@ -1,81 +1,88 @@
 package cs21120;
 
-class TreeNode implements Comparable<TreeNode>
-{
+class TreeNode{
     private Integer value;
-    private TreeNode leftChild;
-    private TreeNode rightChild;
-    private TreeNode parent;
+    private TreeNode left;
+    private TreeNode right;
+    private TreeNode root;
 
     //constructors
-    public TreeNode(){}
-    public TreeNode(Integer v){this.value  = v;}
-    public TreeNode(TreeNode t){
+    public TreeNode() {}
+
+    public TreeNode(TreeNode t) {
         this.value = t.value;
-        this.parent = t.parent;
-        this.leftChild = t.leftChild;
-        this.rightChild = t.rightChild;
+        this.left = t.left;
+        this.right = t.right;
+        this.root = t.root;
     }
-    public TreeNode (Comparable c){this.value = (int) c;}
 
-    //set parent
-    public void setParent(TreeNode t)
-    {
-        this.parent = t;
+    public TreeNode(Comparable c) {
+        this.value = (int) c;
     }
-    //get parent
-    public TreeNode getParent()
-    {
-        return this.parent;
+
+    public Integer getValue() {
+        return value;
     }
-    //get value
-    public int getValue(){return value;}
-    //set value
-    public void setValue(Integer i){ this.value = i;}
-    //get left node
-    public TreeNode getLeftChild(){return leftChild;}
-    //get right node
-    public TreeNode getRightChild(){return rightChild;}
-    //set left child
-    public void setLeftChild(TreeNode t) {this.leftChild = t;}
-    //set right child
-    public void setRightChild(TreeNode t) {this.rightChild = t;}
 
-    public TreeNode find(int n)
-    {
-        //this statement runs if the current node is == the value being searched.
-        if(this.value == n)
-            return this;
-        //this returns values left of the root then performs a recursive call if not found
-        if(value < this.value && leftChild != null)
-            return leftChild.find(n);
-        //this does the same as above except looks on the right side of the root
-        if(rightChild != null)
-            return rightChild.find(n);
+    public void setValue(Integer value) {
+        this.value = value;
+    }
 
-        //this returns if value is not found
+    public TreeNode getLeft() {
+        return left;
+    }
+
+    public void setLeft(TreeNode left) {
+        this.left = left;
+    }
+
+    public TreeNode getRight() {
+        return right;
+    }
+
+    public void setRight(TreeNode right) {
+        this.right = right;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
+
+    public void add(Integer input){
+        if(root == null){
+            root = new TreeNode(input);
+            return;
+        } else {
+            insert(root, input);
+        }
+    }
+
+    public TreeNode insert(TreeNode n, Integer input){
+        if(input.compareTo(n.value) >= 0){
+            if (n.right == null) {
+                n.right = new TreeNode(input);
+                n.right.root = n;
+                return null;
+            }
+            else {
+                insert(n.right, input);
+            }
+        }
+
+        if(input.compareTo(n.value) < 0){
+            if(n.left == null) {
+                n.left = new TreeNode(input);
+                n.left.root = root;
+                return null;
+            }
+            else {
+                insert(n.left, input);
+            }
+        }
         return null;
     }
-
-    @Override
-    public int compareTo(TreeNode o)
-    {
-
-        if (this.value == o.value)
-        {
-            return 0;// if value equal
-        }
-        if (this.value > o.value) //if value greater
-        {
-             return 1;
-        }
-        if (this.value < o.value)
-        {
-            return -1;   //if value less
-        }
-        return 99;
-    }
-
-
-
 }
