@@ -2,9 +2,7 @@ package cs21120;
 
 class TreeNode{
     private Integer value;
-    private TreeNode left;
-    private TreeNode right;
-    private TreeNode root;
+    private TreeNode left, right, root;
 
     //constructors
     public TreeNode() {}
@@ -20,38 +18,6 @@ class TreeNode{
         this.value = (int) c;
     }
 
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public TreeNode getLeft() {
-        return left;
-    }
-
-    public void setLeft(TreeNode left) {
-        this.left = left;
-    }
-
-    public TreeNode getRight() {
-        return right;
-    }
-
-    public void setRight(TreeNode right) {
-        this.right = right;
-    }
-
-    public TreeNode getRoot() {
-        return root;
-    }
-
-    public void setRoot(TreeNode root) {
-        this.root = root;
-    }
-
     public void add(Integer input){
         if(root == null){
             root = new TreeNode(input);
@@ -65,23 +31,19 @@ class TreeNode{
         if(input.compareTo(n.value) >= 0){
             if (n.right == null) {
                 n.right = new TreeNode(input);
-                n.right.root = n;
                 return null;
             }
-            else {
+            else
                 insert(n.right, input);
-            }
         }
 
         if(input.compareTo(n.value) < 0){
             if(n.left == null) {
                 n.left = new TreeNode(input);
-                n.left.root = root;
                 return null;
             }
-            else {
+            else
                 insert(n.left, input);
-            }
         }
         return null;
     }
